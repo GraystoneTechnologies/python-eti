@@ -33,10 +33,8 @@ url_eobi_8_1 = https://www.eurex.com/resource/blob/2128192/2209fe1a6f0a78a27baf6
 url_eobi_8_0 = https://www.eurex.com/resource/blob/1741872/baeb2d87c8cc518f2ff2738a74356548/data/T7_EOBI_XML_Representation_v.8.0.3.zip
 
 eti_versions  = 15_0 14_1 14_0 13_1 13_0 12_1 12_0 11_1 11_0 10_1 10_0 9_1 9_0 8_1 8_0
-# eti_versions  = 15_0 14_1 14_0
 
 eobi_versions = 15_0 14_1 14_0 13_1 13_0 12_1 12_0 11_1 11_0 10_1 10_0 9_1 9_0 8_1 8_0
-# eobi_versions = 15_0 14_1 14_0
 
 
 all: all-eti
