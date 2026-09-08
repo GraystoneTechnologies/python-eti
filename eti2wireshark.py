@@ -521,7 +521,7 @@ def mk_int_case(size, signed, proto):
     else:
         hex_str = '0x' + 'ff' * size
     if size == 1:
-        fn = f'tvb_get_g{unsigned_str}int8'
+        fn = f'tvb_get_{unsigned_str}int8'
     else:
         fn = f'tvb_get_letoh{signed_str}{size_str}'
     s = f'''case {size}:
@@ -589,7 +589,7 @@ dissect_{proto}_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, voi
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "{proto.upper()}");
     col_clear(pinfo->cinfo, COL_INFO);
     guint16 templateid = tvb_get_letohs(tvb, {template_off});
-    const char *template_str = val_to_str_ext(templateid, &template_id_vals_ext, "Unknown {proto.upper()} template: 0x%04x");
+    const char *template_str = val_to_str_ext_const(templateid, &template_id_vals_ext, "Unknown {proto.upper()} template: 0x%04x");
     col_add_fstr(pinfo->cinfo, COL_INFO, "%s", template_str);
 
     /* create display subtree for the protocol */
@@ -706,7 +706,7 @@ dissect_{proto}_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, voi
                 break;
             case ETI_STRING:
                 {{
-                    guint8 c = tvb_get_guint8(tvb, off);
+                    guint8 c = tvb_get_uint8(tvb, off);
                     if (c)
                         proto_tree_add_item(t, hf_{proto}[fields[fidx].field_handle_idx], tvb, off, fields[fidx].size, ENC_ASCII);
                     else {{
@@ -733,7 +733,7 @@ dissect_{proto}_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, voi
                     switch (fields[fidx].size) {{
                         case 1:
                             {{
-                                guint8 x = tvb_get_guint8(tvb, off);
+                                guint8 x = tvb_get_uint8(tvb, off);
                                 if (x == UINT8_MAX) {{
                                     proto_tree_add_uint_format_value(t, hf_{proto}[fields[fidx].field_handle_idx], tvb, off, fields[fidx].size, x, "NO_VALUE (0xff)");
                                     counter[fields[fidx].counter_off] = 0;
